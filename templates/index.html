@@ -3,6 +3,9 @@
 <head>
 
     <meta charset="utf-8" />
+    <head>
+    <meta http-equiv="refresh" content="10">
+    </head>
     <title>Mesh Shield 1.5 Demo</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -20,13 +23,11 @@
     <script>
         $(document).ready(function() {
             var tableRows = $("table tbody tr");
-            var currentRow = 0;
+            var currentRow = {{ highlighted_row_index }};
 
-            setInterval(function() {
-                tableRows.removeClass("highlighted"); // Remove highlight from all rows
-                tableRows.eq(currentRow).addClass("highlighted"); // Add highlight to current row
-                currentRow = (currentRow + 1) % tableRows.length; // Increment current row index, wrap around if necessary
-            }, 5000); // Repeat every 5 seconds
+            if (currentRow !== 999) { // Add check for non-zero value
+                tableRows.eq(currentRow).addClass("highlighted");
+            }
         });
     </script>
 
@@ -64,10 +65,11 @@
         <h1><center>Topology Viewer</center></h1>
         <div id="topology"></div>
     </div>
-    
+
     <script type="text/javascript" src="{{ url_for('static', filename='js/vis.min.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/vis.min.css') }}">
     <script type="text/javascript">
+        // Keep track of node colors in a dictionary
         var topology = new vis.Network(
             document.getElementById('topology'),
             {
@@ -75,7 +77,7 @@
                 edges: new vis.DataSet({{ edges|tojson }}),
             },
             {
-                height: "500px",
+                height: "600px",
                 layout: {
 <!--                    hierarchical: {-->
 <!--                        direction: "LR"-->
@@ -83,6 +85,7 @@
                 }
             }
         );
+
     </script>
 
 </body>

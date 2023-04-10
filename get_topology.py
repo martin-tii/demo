@@ -24,12 +24,14 @@ my_mac = get_my_mac_address()
 macs.append(my_mac)
 nodes = []
 edges = []
+colors = []
 for i, mac in enumerate(macs):
-    node = {"id": mac, "label": mac}
+    node = {"id": mac, "label": mac, "color": 'green'}
     nodes.append(node)
     if i > 0:
         edge = {"from": macs[0], "to": mac, "label": "mesh"}
         edges.append(edge)
+
 
 data = {"nodes": nodes, "edges": edges}
 
