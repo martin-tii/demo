@@ -11,13 +11,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link href="https://fonts.cdnfonts.com/css/alien-energy" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="{{ url_for('static', filename='js/ajax_table_example.js') }}"></script>
 
     <style>
         .highlighted {
-            background-color: #FFFF66;
+            background-color: #F08080;
         }
     </style>
 
@@ -79,27 +78,28 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/vis.min.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/vis.min.css') }}">
     <script type="text/javascript">
-        // Keep track of node colors in a dictionary
         var topology = new vis.Network(
-            document.getElementById('topology'),
-            {
-                nodes: new vis.DataSet({{ nodes|tojson }}),
-                edges: new vis.DataSet({{ edges|tojson }}),
+          document.getElementById('topology'),
+          {
+            nodes: new vis.DataSet({{ nodes|tojson }}),
+            edges: new vis.DataSet({{ edges|tojson }}),
+          },
+          {
+            height: "1000px",
+            layout: {
+              randomSeed: 1,
+              hierarchical: {
+                enabled: false,
+                treeSpacing: 2000,
+                levelSeparation: 200,
+                nodeSpacing: 1500
+              }
             },
-            {
-                height: "1000px",
-                layout: {
-                        randomSeed : 1,
-                    hierarchical: {
-                            enabled: true,
-                            treeSpacing: 2000,
-                            levelSeparation: 200,
-                            nodeSpacing: 1500
-                    }
-                }
+            physics: {
+              enabled: false
+            }
             }
         );
-
     </script>
 
 </body>
